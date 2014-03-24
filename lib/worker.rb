@@ -15,7 +15,7 @@ module Worker
   end
 
   # method used to define worker tasks
-  def add(task_name, &block)
+  def add(task_name, *args, &block)
     raise "Block required" unless block_given?
     WorkerMethods.define_singleton_method task_name, block
   end
@@ -52,7 +52,7 @@ module Worker
       # debug output
       puts "WORKER: #{WORKER_ID} - #{data}"
 
-      WorkerMethods.send task
+      WorkerMethods.send task, data
 
     end
 
